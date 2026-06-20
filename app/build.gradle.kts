@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -57,7 +58,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.coil.compose)
+    implementation(libs.retrofit.kotlinx.serialization)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.lifecycle.runtime.compose)
 }
