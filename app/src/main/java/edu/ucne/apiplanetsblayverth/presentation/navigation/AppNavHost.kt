@@ -23,7 +23,7 @@ fun AppNavHost(
             )
         }
 
-        composable<Screen.PlanetList> {
+        composable<Screen.PlanetDetail> {
             PlanetDetailScreen(onBack = {navHostController.navigateUp()})
         }
     }
