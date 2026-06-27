@@ -6,7 +6,7 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 class PlanetRemoteDataSource @Inject constructor(
-    private val api: PlanetsApi
+    private val api: DragonBallApi
 ) {
     suspend fun getPlanets(
         page: Int,

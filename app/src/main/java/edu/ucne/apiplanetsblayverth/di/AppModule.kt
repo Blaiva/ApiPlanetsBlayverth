@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import edu.ucne.apiplanetsblayverth.data.remote.PlanetRemoteDataSource
-import edu.ucne.apiplanetsblayverth.data.remote.PlanetsApi
+import edu.ucne.apiplanetsblayverth.data.remote.DragonBallApi
 import edu.ucne.apiplanetsblayverth.data.repository.PlanetRepositoryImp
 import edu.ucne.apiplanetsblayverth.domain.repository.PlanetRepository
 import edu.ucne.apiplanetsblayverth.domain.usecase.GetPlanetDetailUseCase
@@ -27,17 +27,17 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePlanetsApi(moshi: Moshi): PlanetsApi {
+    fun providePlanetsApi(moshi: Moshi): DragonBallApi {
         return Retrofit.Builder()
             .baseUrl("https://dragonball-api.com/api/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
-            .create(PlanetsApi::class.java)
+            .create(DragonBallApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun providePlanetRemoteDataSource(api: PlanetsApi): PlanetRemoteDataSource {
+    fun providePlanetRemoteDataSource(api: DragonBallApi): PlanetRemoteDataSource {
         return PlanetRemoteDataSource(api)
     }
 
