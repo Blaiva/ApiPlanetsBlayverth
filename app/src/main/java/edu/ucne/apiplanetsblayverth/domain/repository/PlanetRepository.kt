@@ -2,14 +2,16 @@ package edu.ucne.apiplanetsblayverth.domain.repository
 
 import edu.ucne.apiplanetsblayverth.data.remote.Resource
 import edu.ucne.apiplanetsblayverth.data.remote.dto.PlanetDto
+import edu.ucne.apiplanetsblayverth.domain.model.Planet
+import kotlinx.coroutines.flow.Flow
 
 interface PlanetRepository {
-    suspend fun getPlanets(
+    fun getPlanets(
         page: Int,
         limit: Int,
         name: String?,
         isDestroyed: Boolean?
-    ): Resource<List<PlanetDto>>
+    ): Flow<Resource<List<Planet>>>
 
-    suspend fun getPlanetDetail(id: Int): Resource<PlanetDto>
+    suspend fun getPlanetDetail(id: Int): Flow<Resource<Planet>>
 }

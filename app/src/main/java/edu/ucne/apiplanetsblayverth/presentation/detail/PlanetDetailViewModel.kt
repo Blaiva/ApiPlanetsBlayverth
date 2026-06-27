@@ -29,14 +29,28 @@ class PlanetDetailViewModel @Inject constructor(
 
     private fun loadPlanet(id: Int){
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
-            when(val result = getPlanetDetailUseCase(id)){
-                is Resource.Loading -> {}
-                is Resource.Success -> {
-                    _state.update { it.copy(isLoading = false, planet = result.data?.toDomain()) }
-                }
-                is Resource.Error -> {
-                    _state.update { it.copy(isLoading = false, error = result.message) }
+            getPlanetDetailUseCase(id).collect { result ->
+                when(result){
+                    is Resource.Loading -> {
+                        _state.update { it.copy(isLoading = true, error = null) }
+                    }
+                    is Resource.Success -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                planet = result.data,
+                                error = null
+                            )
+                        }
+                    }
+                    is Resource.Error -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                error = result.message
+                            )
+                        }
+                    }
                 }
             }
         }

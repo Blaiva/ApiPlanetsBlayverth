@@ -6,9 +6,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import edu.ucne.apiplanetsblayverth.data.remote.PlanetRemoteDataSource
 import edu.ucne.apiplanetsblayverth.data.remote.PlanetsApi
 import edu.ucne.apiplanetsblayverth.data.repository.PlanetRepositoryImp
 import edu.ucne.apiplanetsblayverth.domain.repository.PlanetRepository
+import edu.ucne.apiplanetsblayverth.domain.usecase.GetPlanetDetailUseCase
+import edu.ucne.apiplanetsblayverth.domain.usecase.GetPlanetsUseCase
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -24,15 +27,37 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApi(moshi: Moshi): PlanetsApi{
-        return Retrofit.Builder().baseUrl("https://dragonball-api.com/api/")
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build().create(PlanetsApi::class.java)
+    fun providePlanetsApi(): PlanetsApi {
+        return Retrofit.Builder()
+            .baseUrl("https://dragonball-api.com/api/")
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+            .create(PlanetsApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideRepository(api: PlanetsApi): PlanetRepository{
-        return PlanetRepositoryImp(api)
+    fun providePlanetRemoteDataSource(api: PlanetsApi): PlanetRemoteDataSource {
+        return PlanetRemoteDataSource(api)
+    }
+
+    @Provides
+    @Singleton
+    fun providePlanetRepository(
+        remoteDataSource: PlanetRemoteDataSource
+    ): PlanetRepository {
+        return PlanetRepositoryImp(remoteDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetPlanetsUseCase(repository: PlanetRepository): GetPlanetsUseCase {
+        return GetPlanetsUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetPlanetDetailUseCase(repository: PlanetRepository): GetPlanetDetailUseCase {
+        return GetPlanetDetailUseCase(repository)
     }
 }
