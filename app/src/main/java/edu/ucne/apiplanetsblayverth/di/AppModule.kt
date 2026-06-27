@@ -27,10 +27,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePlanetsApi(): PlanetsApi {
+    fun providePlanetsApi(moshi: Moshi): PlanetsApi {
         return Retrofit.Builder()
             .baseUrl("https://dragonball-api.com/api/")
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(PlanetsApi::class.java)
     }
