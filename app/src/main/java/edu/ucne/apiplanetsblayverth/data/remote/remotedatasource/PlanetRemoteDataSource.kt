@@ -1,5 +1,6 @@
-package edu.ucne.apiplanetsblayverth.data.remote
+package edu.ucne.apiplanetsblayverth.data.remote.remotedatasource
 
+import edu.ucne.apiplanetsblayverth.data.remote.DragonBallApi
 import edu.ucne.apiplanetsblayverth.data.remote.dto.planet.PlanetDto
 import edu.ucne.apiplanetsblayverth.data.remote.dto.planet.PlanetsResponseDto
 import retrofit2.HttpException

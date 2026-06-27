@@ -1,6 +1,6 @@
 package edu.ucne.apiplanetsblayverth.data.repository
 
-import edu.ucne.apiplanetsblayverth.data.remote.PlanetRemoteDataSource
+import edu.ucne.apiplanetsblayverth.data.remote.remotedatasource.PlanetRemoteDataSource
 import edu.ucne.apiplanetsblayverth.data.remote.Resource
 import edu.ucne.apiplanetsblayverth.domain.model.Planet
 import edu.ucne.apiplanetsblayverth.domain.repository.PlanetRepository

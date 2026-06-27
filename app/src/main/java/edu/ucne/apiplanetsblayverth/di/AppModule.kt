@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import edu.ucne.apiplanetsblayverth.data.remote.PlanetRemoteDataSource
+import edu.ucne.apiplanetsblayverth.data.remote.remotedatasource.PlanetRemoteDataSource
 import edu.ucne.apiplanetsblayverth.data.remote.DragonBallApi
 import edu.ucne.apiplanetsblayverth.data.repository.PlanetRepositoryImp
 import edu.ucne.apiplanetsblayverth.domain.repository.PlanetRepository
