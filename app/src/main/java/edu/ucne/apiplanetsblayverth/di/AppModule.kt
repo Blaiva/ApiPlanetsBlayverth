@@ -10,8 +10,8 @@ import edu.ucne.apiplanetsblayverth.data.remote.remotedatasource.PlanetRemoteDat
 import edu.ucne.apiplanetsblayverth.data.remote.DragonBallApi
 import edu.ucne.apiplanetsblayverth.data.repository.PlanetRepositoryImp
 import edu.ucne.apiplanetsblayverth.domain.repository.PlanetRepository
-import edu.ucne.apiplanetsblayverth.domain.usecase.GetPlanetDetailUseCase
-import edu.ucne.apiplanetsblayverth.domain.usecase.GetPlanetsUseCase
+import edu.ucne.apiplanetsblayverth.domain.usecase.planet.GetPlanetDetailUseCase
+import edu.ucne.apiplanetsblayverth.domain.usecase.planet.GetPlanetsUseCase
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton

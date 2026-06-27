@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.ucne.apiplanetsblayverth.data.remote.Resource
-import edu.ucne.apiplanetsblayverth.domain.usecase.GetPlanetDetailUseCase
+import edu.ucne.apiplanetsblayverth.domain.usecase.planet.GetPlanetDetailUseCase
 import edu.ucne.apiplanetsblayverth.presentation.navigation.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
