@@ -1,7 +1,7 @@
 package edu.ucne.apiplanetsblayverth.data.remote
 
-import edu.ucne.apiplanetsblayverth.data.remote.dto.PlanetDto
-import edu.ucne.apiplanetsblayverth.data.remote.dto.PlanetsResponseDto
+import edu.ucne.apiplanetsblayverth.data.remote.dto.planet.PlanetDto
+import edu.ucne.apiplanetsblayverth.data.remote.dto.planet.PlanetsResponseDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

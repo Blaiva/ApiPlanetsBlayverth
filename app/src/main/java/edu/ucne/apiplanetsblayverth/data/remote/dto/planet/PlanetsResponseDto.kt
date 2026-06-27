@@ -1,4 +1,4 @@
-package edu.ucne.apiplanetsblayverth.data.remote.dto
+package edu.ucne.apiplanetsblayverth.data.remote.dto.planet
 
 import com.squareup.moshi.JsonClass
 
