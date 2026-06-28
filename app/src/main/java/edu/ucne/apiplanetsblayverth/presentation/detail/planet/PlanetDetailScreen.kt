@@ -1,4 +1,4 @@
-package edu.ucne.apiplanetsblayverth.presentation.detail
+package edu.ucne.apiplanetsblayverth.presentation.detail.planet
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

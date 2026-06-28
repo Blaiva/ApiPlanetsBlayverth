@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import edu.ucne.apiplanetsblayverth.presentation.detail.PlanetDetailScreen
+import edu.ucne.apiplanetsblayverth.presentation.detail.planet.PlanetDetailScreen
 import edu.ucne.apiplanetsblayverth.presentation.list.planet.PlanetListScreen
 
 @Composable

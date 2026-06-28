@@ -1,4 +1,4 @@
-package edu.ucne.apiplanetsblayverth.presentation.detail
+package edu.ucne.apiplanetsblayverth.presentation.detail.planet
 
 import edu.ucne.apiplanetsblayverth.domain.model.Planet
 
