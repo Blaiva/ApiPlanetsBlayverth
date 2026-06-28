@@ -1,7 +1,6 @@
-package edu.ucne.apiplanetsblayverth.domain.usecase
+package edu.ucne.apiplanetsblayverth.domain.usecase.planet
 
 import edu.ucne.apiplanetsblayverth.data.remote.Resource
-import edu.ucne.apiplanetsblayverth.data.remote.dto.PlanetDto
 import edu.ucne.apiplanetsblayverth.domain.model.Planet
 import edu.ucne.apiplanetsblayverth.domain.repository.PlanetRepository
 import kotlinx.coroutines.flow.Flow

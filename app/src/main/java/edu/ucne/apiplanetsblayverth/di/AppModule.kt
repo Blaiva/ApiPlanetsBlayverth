@@ -6,12 +6,17 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import edu.ucne.apiplanetsblayverth.data.remote.PlanetRemoteDataSource
-import edu.ucne.apiplanetsblayverth.data.remote.PlanetsApi
+import edu.ucne.apiplanetsblayverth.data.remote.remotedatasource.PlanetRemoteDataSource
+import edu.ucne.apiplanetsblayverth.data.remote.DragonBallApi
+import edu.ucne.apiplanetsblayverth.data.remote.remotedatasource.CharacterRemoteDataSource
+import edu.ucne.apiplanetsblayverth.data.repository.CharacterRepositoryImp
 import edu.ucne.apiplanetsblayverth.data.repository.PlanetRepositoryImp
+import edu.ucne.apiplanetsblayverth.domain.repository.CharacterRepository
 import edu.ucne.apiplanetsblayverth.domain.repository.PlanetRepository
-import edu.ucne.apiplanetsblayverth.domain.usecase.GetPlanetDetailUseCase
-import edu.ucne.apiplanetsblayverth.domain.usecase.GetPlanetsUseCase
+import edu.ucne.apiplanetsblayverth.domain.usecase.character.GetCharacterDetailUseCase
+import edu.ucne.apiplanetsblayverth.domain.usecase.character.GetCharactersUseCase
+import edu.ucne.apiplanetsblayverth.domain.usecase.planet.GetPlanetDetailUseCase
+import edu.ucne.apiplanetsblayverth.domain.usecase.planet.GetPlanetsUseCase
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -27,18 +32,24 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePlanetsApi(moshi: Moshi): PlanetsApi {
+    fun providePlanetsApi(moshi: Moshi): DragonBallApi {
         return Retrofit.Builder()
             .baseUrl("https://dragonball-api.com/api/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
-            .create(PlanetsApi::class.java)
+            .create(DragonBallApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun providePlanetRemoteDataSource(api: PlanetsApi): PlanetRemoteDataSource {
+    fun providePlanetRemoteDataSource(api: DragonBallApi): PlanetRemoteDataSource {
         return PlanetRemoteDataSource(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCharacterRemoteDataSource(api: DragonBallApi): CharacterRemoteDataSource{
+        return CharacterRemoteDataSource(api)
     }
 
     @Provides
@@ -51,6 +62,14 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideCharacterRepository(
+        remoteDataSource: CharacterRemoteDataSource
+    ): CharacterRepository{
+        return CharacterRepositoryImp(remoteDataSource)
+    }
+
+    @Provides
+    @Singleton
     fun provideGetPlanetsUseCase(repository: PlanetRepository): GetPlanetsUseCase {
         return GetPlanetsUseCase(repository)
     }
@@ -59,5 +78,17 @@ object AppModule {
     @Singleton
     fun provideGetPlanetDetailUseCase(repository: PlanetRepository): GetPlanetDetailUseCase {
         return GetPlanetDetailUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetCharactersUseCase(repository: CharacterRepository): GetCharactersUseCase{
+        return GetCharactersUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetCharacterDetailUseCase(repository: CharacterRepository): GetCharacterDetailUseCase{
+        return GetCharacterDetailUseCase(repository)
     }
 }

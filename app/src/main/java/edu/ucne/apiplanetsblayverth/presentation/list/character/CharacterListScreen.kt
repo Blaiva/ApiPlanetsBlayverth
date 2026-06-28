@@ -1,4 +1,4 @@
-package edu.ucne.apiplanetsblayverth.presentation.list
+package edu.ucne.apiplanetsblayverth.presentation.list.character
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,26 +24,27 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil3.compose.AsyncImage
-import edu.ucne.apiplanetsblayverth.domain.model.Planet
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.Alignment
+import coil3.compose.AsyncImage
+import edu.ucne.apiplanetsblayverth.domain.model.Character
+import edu.ucne.apiplanetsblayverth.domain.model.Planet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlanetListScreen(
-    viewModel: PlanetListViewModel = hiltViewModel(),
-    onPlanetClick: (Int) -> Unit
+fun CharacterListScreen(
+    viewModel: CharacterListViewModel = hiltViewModel(),
+    onCharacterClick: (Int) -> Unit
 ){
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(title = { Text("Planetas de Dragon Ball") })
+            CenterAlignedTopAppBar(title = {Text("Personajes de Dragon Ball")})
         }
     ) { padding ->
         Column(
@@ -58,39 +59,56 @@ fun PlanetListScreen(
                 ) {
                     OutlinedTextField(
                         value = state.filterName,
-                        onValueChange = {viewModel.onEvent(PlanetListEvent.UpdateFilters(it, state.filterIsDestroyed))},
-                        label = {Text("Nombre del Planeta")},
+                        onValueChange = {viewModel.onEvent(CharacterListEvent.OnNameChanged(it))},
+                        label = {Text("Nombre del personaje")},
                         modifier = Modifier.fillMaxWidth()
                     )
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        OutlinedTextField(
+                            value = state.filterGender,
+                            onValueChange = { viewModel.onEvent(CharacterListEvent.OnGenderChanged(it)) },
+                            label = { Text("Genero") },
+                            modifier = Modifier.weight(1f)
+                        )
+                        OutlinedTextField(
+                            value = state.filterRace,
+                            onValueChange = { viewModel.onEvent(CharacterListEvent.OnRaceChanged(it)) },
+                            label = { Text("Raza") },
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
                     Button(
-                        onClick = {viewModel.onEvent(PlanetListEvent.Search)},
+                        onClick = {viewModel.onEvent(CharacterListEvent.Search)},
                         modifier = Modifier.align(Alignment.End)
                     ) {
                         Text("Buscar")
                     }
                 }
-            }
 
-            if (state.isLoading){
-                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
-                    CircularProgressIndicator()
+                if (state.isLoading){
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ){
+                        CircularProgressIndicator()
+                    }
                 }
-            }
 
-            state.error?.let {
-                Text(
-                    text = "Error: $it",
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
+                state.error?.let {
+                    Text(
+                        text = "Error: $it",
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
 
-            LazyColumn(
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(state.planets){planet ->
-                    PlanetItem(planet = planet, onClick = {onPlanetClick(planet.id)})
+                LazyColumn(
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(state.characters){ character ->
+                        CharacterItem(character = character, onClick = {onCharacterClick(character.id)})
+                    }
                 }
             }
         }
@@ -98,8 +116,8 @@ fun PlanetListScreen(
 }
 
 @Composable
-fun PlanetItem(
-    planet: Planet,
+fun CharacterItem(
+    character: Character,
     onClick: () -> Unit
 ){
     ElevatedCard(
@@ -110,19 +128,23 @@ fun PlanetItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model = planet.image,
-                contentDescription = planet.name,
+                model = character.image,
+                contentDescription = character.name,
                 modifier = Modifier.size(64.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))
-            Column {
+            Column{
                 Text(
-                    planet.name,
+                    character.name,
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    text = if (planet.isDestroyed) "Destruido" else "Intacto",
+                    "Raza: ${character.race}",
                     style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    "Ki: ${character.ki}",
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
         }

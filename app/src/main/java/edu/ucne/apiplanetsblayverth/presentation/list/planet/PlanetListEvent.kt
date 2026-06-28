@@ -1,4 +1,4 @@
-package edu.ucne.apiplanetsblayverth.presentation.list
+package edu.ucne.apiplanetsblayverth.presentation.list.planet
 
 sealed interface PlanetListEvent {
     data class UpdateFilters(
