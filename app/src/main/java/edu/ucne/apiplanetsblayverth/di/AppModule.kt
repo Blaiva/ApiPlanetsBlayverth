@@ -8,8 +8,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import edu.ucne.apiplanetsblayverth.data.remote.remotedatasource.PlanetRemoteDataSource
 import edu.ucne.apiplanetsblayverth.data.remote.DragonBallApi
+import edu.ucne.apiplanetsblayverth.data.remote.remotedatasource.CharacterRemoteDataSource
+import edu.ucne.apiplanetsblayverth.data.repository.CharacterRepositoryImp
 import edu.ucne.apiplanetsblayverth.data.repository.PlanetRepositoryImp
+import edu.ucne.apiplanetsblayverth.domain.repository.CharacterRepository
 import edu.ucne.apiplanetsblayverth.domain.repository.PlanetRepository
+import edu.ucne.apiplanetsblayverth.domain.usecase.character.GetCharacterDetailUseCase
+import edu.ucne.apiplanetsblayverth.domain.usecase.character.GetCharactersUseCase
 import edu.ucne.apiplanetsblayverth.domain.usecase.planet.GetPlanetDetailUseCase
 import edu.ucne.apiplanetsblayverth.domain.usecase.planet.GetPlanetsUseCase
 import retrofit2.Retrofit
@@ -43,10 +48,24 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideCharacterRemoteDataSource(api: DragonBallApi): CharacterRemoteDataSource{
+        return CharacterRemoteDataSource(api)
+    }
+
+    @Provides
+    @Singleton
     fun providePlanetRepository(
         remoteDataSource: PlanetRemoteDataSource
     ): PlanetRepository {
         return PlanetRepositoryImp(remoteDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCharacterRepository(
+        remoteDataSource: CharacterRemoteDataSource
+    ): CharacterRepository{
+        return CharacterRepositoryImp(remoteDataSource)
     }
 
     @Provides
@@ -59,5 +78,17 @@ object AppModule {
     @Singleton
     fun provideGetPlanetDetailUseCase(repository: PlanetRepository): GetPlanetDetailUseCase {
         return GetPlanetDetailUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetCharactersUseCase(repository: CharacterRepository): GetCharactersUseCase{
+        return GetCharactersUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetCharacterDetailUseCase(repository: CharacterRepository): GetCharacterDetailUseCase{
+        return GetCharacterDetailUseCase(repository)
     }
 }
