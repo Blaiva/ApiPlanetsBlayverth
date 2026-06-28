@@ -26,16 +26,23 @@ class CharacterRepositoryImp @Inject constructor(
             val domainCharacters = charactersResponse.items.map { it.toDomain() }
             emit(Resource.Success(domainCharacters))
         }.onFailure { exception ->
-            if (!name.isNullOrBlank()){
+            if (!name.isNullOrBlank() || !gender.isNullOrBlank() || !race.isNullOrBlank()) {
                 val alternativeResult = remoteDataSource.getCharacters(page = 1, limit = 50, name = null, gender = null, race = null)
                 alternativeResult.onSuccess { alternativeResponse ->
+
                     val filteredList = alternativeResponse.items
-                        .filter { it.name.contains(name, ignoreCase = true) }
+                        .filter { item ->
+                            val matchesName = name.isNullOrBlank() || item.name.contains(name, ignoreCase = true)
+                            val matchesGender = gender.isNullOrBlank() || item.gender.equals(gender, ignoreCase = true)
+                            val matchesRace = race.isNullOrBlank() || item.race.contains(race, ignoreCase = true)
+
+                            matchesName && matchesGender && matchesRace
+                        }
                         .map { it.toDomain() }
 
                     emit(Resource.Success(filteredList))
                 }.onFailure { nestedException ->
-                    emit(Resource.Error("Error en filro local: ${nestedException.localizedMessage}"))
+                    emit(Resource.Error("Error en filtro local: ${nestedException.localizedMessage}"))
                 }
             }else{
                 emit(Resource.Error(exception.message ?: "Error desconocido en el servidor"))
