@@ -1,4 +1,4 @@
-package edu.ucne.apiplanetsblayverth.presentation.list
+package edu.ucne.apiplanetsblayverth.presentation.list.planet
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
